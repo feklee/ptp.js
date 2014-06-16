@@ -1,0 +1,19 @@
+{
+    "name": "ptp.js demo",
+    "description": "Demo of ptp.js functions",
+    "launch_path": "/demo/app.html",
+    "icons": {
+        "128": "/demo/app.png"
+    },
+    "developer": {
+        "name": "Developers of ptp.js",
+        "url": "http://example.com"
+    },
+    "default_locale": "en",
+    "type": "privileged",
+    "permissions" : {
+        "tcp-socket" : {
+            "description" : "Create TCP sockets and communicate over them."
+        }
+    }
+}

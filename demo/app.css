@@ -1,0 +1,15 @@
+body {
+    font-size: 16px;
+}
+
+section.log span.error {
+    color: red;
+}
+
+h1 {
+    font-size: 1.4em;
+}
+
+h2 {
+    font-size: 1.2em;
+}

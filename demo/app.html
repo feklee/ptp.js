@@ -1,0 +1,53 @@
+<!doctype html>
+
+<meta charset="utf-8" />
+<title>Example</title>
+<link rel="stylesheet" href="app.css" />
+
+<section class="commands">
+  <h1>Functions</h1>
+
+  <section class="connect">
+    <h2>connect</h2>
+    <input type="text"
+           pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$"
+           placeholder="Camera’s IP">
+    <button>Connect</button>
+  </section>
+
+  <section class="capture">
+    <h2>capture</h2>
+    <button>Capture</button>
+  </section>
+
+  <section class="set-device-property">
+    <h2>setDeviceProperty</h2>
+    Exposure compensation:
+    <select>
+      <option value="-1000">EV-1</option>
+      <option value="0" selected>EV+0</option>
+      <option value="1000">EV+1</option>
+    </select>
+    <button>Set</button>
+  </section>
+
+  <section class="get-device-property">
+    <h2>getDeviceProperty</h2>
+    <button>Get battery level</button>
+  </section>
+
+  <section class="date-time-string">
+    <h2>dateTimeString</h2>
+    <button>Current date and time</button>
+  </section>
+</section>
+
+<section class="log">
+  <h1>Log</h1>
+  <p>
+    Waiting for your action…
+  </p>
+</section>
+
+<script src="vendor/require.js"></script>
+<script src="scripts/require-config.js"></script>
