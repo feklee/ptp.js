@@ -26,20 +26,26 @@ define([
         return ret;
     };
 
+    // Parses incoming PTP/IP packets (there may be several fused), and - as far
+    // as available - runs a callback for each.
     internalProto.onData = function (event) {
-        var data = dataFactory.create(event.data), packetContent, callback;
+        var data = dataFactory.create(event.data), packetContentList,
+            internal = this;
 
         this.logMsg('Received: ' + data.toString());
 
-        packetContent = packet.parse(data);
-        if (packetContent === false) {
+        packetContentList = packet.parsePackets(data);
+
+        if (packetContentList === false) {
             return;
         }
 
-        callback = this.onDataCallbacks[packetContent.type];
-        if (callback !== undefined) {
-            callback(packetContent);
-        }
+        packetContentList.forEach(function (packetContent) {
+            var callback = internal.onDataCallbacks[packetContent.type];
+            if (callback !== undefined) {
+                callback(packetContent);
+            }
+        });
     };
 
     internalProto.onDrained = function () {

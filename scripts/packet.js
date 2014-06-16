@@ -1,3 +1,7 @@
+// PTP/IP packet. Documentation as of June 2014:
+//
+// <http://www.gphoto.org/doc/ptpip.php>
+
 /*jslint browser: true, maxerr: 50, maxlen: 80 */
 
 /*global define */
@@ -13,7 +17,7 @@ define(['./data-factory'], function (dataFactory) {
         createDataPacket,
         createEndDataPacket,
         startNewTransaction,
-        parse,
+        parsePacket, parsePackets,
         setHeader,
         parsers = {}; // by packet type
 
@@ -38,7 +42,7 @@ define(['./data-factory'], function (dataFactory) {
 
     parsers[types.initCommandAck] = function (data) {
         return {
-            sessionId: data.getDword(headerLength)
+            sessionId: data.getDword(0)
         };
     };
 
@@ -48,47 +52,47 @@ define(['./data-factory'], function (dataFactory) {
 
     parsers[types.initFail] = function (data) {
         return {
-            errorCode: data.getDword(headerLength)
+            errorCode: data.getDword(0)
         };
     };
 
     parsers[types.event] = function (data) {
         return {
-            eventCode: data.getWord(headerLength),
+            eventCode: data.getWord(0),
             parameters: [
-                data.getDword(headerLength + 2),
-                data.getDword(headerLength + 6),
-                data.getDword(headerLength + 10)
+                data.getDword(2),
+                data.getDword(6),
+                data.getDword(10)
             ]
         };
     };
 
     parsers[types.cmdResponse] = function (data) {
         return {
-            responseCode: data.getWord(headerLength),
-            transactionId: data.getDword(headerLength + 2),
-            argsData: data.remainder(headerLength + 6)
+            responseCode: data.getWord(0),
+            transactionId: data.getDword(2),
+            argsData: data.remainder(6)
         };
     };
 
     parsers[types.startDataPacket] = function (data) {
         return {
-            transactionId: data.getDword(headerLength),
-            dataSize: data.getDword(headerLength + 4) // without headers
+            transactionId: data.getDword(0),
+            dataSize: data.getDword(4) // without headers
         };
     };
 
     parsers[types.dataPacket] = function (data) {
         return {
-            transactionId: data.getDword(headerLength),
-            payloadData: data.remainder(headerLength + 4)
+            transactionId: data.getDword(0),
+            payloadData: data.remainder(4)
         };
     };
 
     parsers[types.endDataPacket] = function (data) {
         return {
-            transactionId: data.getDword(headerLength),
-            payloadData: data.remainder(headerLength + 4)
+            transactionId: data.getDword(0),
+            payloadData: data.remainder(4)
         };
     };
 
@@ -97,28 +101,48 @@ define(['./data-factory'], function (dataFactory) {
         data.setDword(4, type);
     };
 
-    // Returns false on error.
-    parse = function (data) {
-        var content = {}, type, parser;
+    // Parses a packet, and returns the contents. Returns false on error.
+    parsePacket = function (data, offs) {
+        var content = {}, length, type, parser, unparsedData;
 
         if (data.length < 8) {
             return false; // not enough data, should not happen
         }
 
-        type = data.getWord(4);
+        length = data.getWord(offs);
+        type = data.getWord(offs + 4);
         parser = parsers[type];
 
+        unparsedData = data.slice(offs + headerLength, offs + length);
         if (parser !== undefined) {
-            content = parser(data);
+            content = parser(unparsedData);
         } else {
             content = {
-                unparsedData: data
+                unparsedData: unparsedData
             };
         }
 
+        content.length = length;
         content.type = type;
 
         return content;
+    };
+
+    // Parses a piece of data that may contain several packets, concatenated.
+    // Returns a list of contents of the parsed packets. Returns false on error.
+    parsePackets = function (data) {
+        var offs = 0, packetContent, packetContentList = [];
+
+        do {
+            packetContent = parsePacket(data, offs);
+            if (packetContent === false) {
+                return false;
+            }
+            packetContentList.push(packetContent);
+            offs += packetContent.length;
+        } while (offs < data.length);
+
+        return packetContentList;
     };
 
     // Quote from the "White Paper of CIPA DC-005-2005": "[...] the Initiator
@@ -215,7 +239,7 @@ define(['./data-factory'], function (dataFactory) {
         createEndDataPacket: {value: createEndDataPacket},
         startNewTransaction: {value: startNewTransaction},
         types: {get: function () { return types; }},
-        parse: {value: parse},
+        parsePackets: {value: parsePackets},
         transactionId: {get: function () { return transactionId; }}
     });
 });

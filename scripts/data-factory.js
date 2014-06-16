@@ -51,6 +51,10 @@ define(function () {
         return create(this.arr.slice(offs));
     };
 
+    internalProto.slice = function (offs, end) {
+        return create(this.arr.slice(offs, end));
+    };
+
     internalProto.setByte = function (offs, value) {
         this.arr[offs] = value;
     };
@@ -187,8 +191,12 @@ define(function () {
                 internal.appendData(data);
             }},
 
-            remainder: {value: function (offs) {
+            remainder: {value: function (offs) { // TODO: get rid of that in favor of slice
                 return internal.remainder(offs);
+            }},
+
+            slice: {value: function (offs, end) {
+                return internal.slice(offs, end);
             }},
 
             length: {get: function () {
