@@ -47,10 +47,6 @@ define(function () {
         Array.prototype.push.apply(this.arr, data.array);
     };
 
-    internalProto.remainder = function (offs) {
-        return create(this.arr.slice(offs));
-    };
-
     internalProto.slice = function (offs, end) {
         return create(this.arr.slice(offs, end));
     };
@@ -189,10 +185,6 @@ define(function () {
 
             appendData: {value: function (data) {
                 internal.appendData(data);
-            }},
-
-            remainder: {value: function (offs) { // TODO: get rid of that in favor of slice
-                return internal.remainder(offs);
             }},
 
             slice: {value: function (offs, end) {

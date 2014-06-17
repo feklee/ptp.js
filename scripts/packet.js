@@ -71,7 +71,7 @@ define(['./data-factory'], function (dataFactory) {
         return {
             responseCode: data.getWord(0),
             transactionId: data.getDword(2),
-            argsData: data.remainder(6)
+            argsData: data.slice(6)
         };
     };
 
@@ -85,14 +85,14 @@ define(['./data-factory'], function (dataFactory) {
     parsers[types.dataPacket] = function (data) {
         return {
             transactionId: data.getDword(0),
-            payloadData: data.remainder(4)
+            payloadData: data.slice(4)
         };
     };
 
     parsers[types.endDataPacket] = function (data) {
         return {
             transactionId: data.getDword(0),
-            payloadData: data.remainder(4)
+            payloadData: data.slice(4)
         };
     };
 
