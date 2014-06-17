@@ -61,6 +61,8 @@ Coding conventions
     functions to return different types of values, including types indicating
     errors.
 
+  * Versioning: major.minor.bug-fix
+
 Reading
 -------
 
