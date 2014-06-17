@@ -63,6 +63,8 @@ Coding conventions
 
   * Versioning: major.minor.bug-fix
 
+    Incompatible changes to the API mandate an update of the major version.
+
 Reading
 -------
 
