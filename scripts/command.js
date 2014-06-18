@@ -114,11 +114,13 @@ define([
                                       settings.args);
 
         if (!mainLoop.scheduleSend(req)) {
+            settings.onFailure();
             return;
         }
 
         if (settings.payload !== undefined) {
             if (!sendPayload(settings.payload)) {
+                settings.onFailure();
                 return;
             }
         }

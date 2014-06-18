@@ -31,10 +31,7 @@ Limitations
 
   * Incompleteness: Many PTP functions are missing.
 
-  * Only tested with the Ricoh Theta.
-
-  * There is no provision, such as a command queue, for devices that cannot
-    process two PTP/IP commands concurrently.
+  * Only tested with one camera, the Ricoh Theta.
 
 
 Requirements

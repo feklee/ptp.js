@@ -5,8 +5,9 @@
 define(['./command', './main-loop'], function (command, mainLoop) {
     'use strict';
 
+    // Returns false iff sending property could not be requested.
     return function (settings) {
-        command.sendCommand({
+        return command.sendCommand({
             operationCode: mainLoop.operationCodes.setDevicePropValue,
             args: [settings.code],
             payload: settings.data,
