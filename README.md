@@ -45,6 +45,14 @@ Requirements
 Development
 ===========
 
+Module graph as of 2014-06-19 CEST
+----------------------------------
+
+Module graph created with `madge --image graph.png --exclude
+"util|logger|connection-settings" --format amd scripts`, then annotated:
+
+![Annotated graph][12]
+
 Coding conventions
 ------------------
 
@@ -110,3 +118,4 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [9]: http://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/f2012/jmv87/site/files/pima15740-2000.pdf
 [10]: http://www.gphoto.org/doc/ptpip.php
 [11]: http://www.cipa.jp/ptp-ip/documents_e/CIPA_DC-005_Whitepaper_ENG.pdf
+[12]: 2014-06-19+02_annotated_graph.png
