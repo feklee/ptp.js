@@ -5,11 +5,13 @@ Introduction
 controlling cameras via [PTP][1]/IP: *Picture Transfer Protocol* via an
 IP-based network
 
-*ptp.js* was initially written by [Felix][3] for remote controlling a
-[Ricoh Theta][2]. The library was inspired by `ThetaShutterProc.c`, a set of C
-functions part of [ThetaShutter_PQIAirPen002.zip][6] by [MobileHackerz][4].
-*ptp.js* has a different architecture, however, making use of JavaScript’s
-functional programming features.
+The first version of the library was developed by [Felix][3] for interfacing
+with a [Ricoh Theta][2]. On Firefox Marketplace you find the result:
+[Theta Control][13]
+
+An inspiration was `ThetaShutterProc.c`, a set of C functions part of
+[ThetaShutter_PQIAirPen002.zip][6] by [MobileHackerz][4]. *ptp.js* has a
+different architecture, however, making use of JavaScript’s functional nature.
 
 
 Documentation
@@ -119,3 +121,4 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [10]: http://www.gphoto.org/doc/ptpip.php
 [11]: http://www.cipa.jp/ptp-ip/documents_e/CIPA_DC-005_Whitepaper_ENG.pdf
 [12]: 2014-06-19+02_annotated_graph.png
+[13]: https://marketplace.firefox.com/app/theta-control
