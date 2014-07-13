@@ -11,17 +11,31 @@ define([
              connectionSettings, capture, logger, util) {
     'use strict';
 
+    var onNoConnection = util.nop, onError = util.nop, onConnected = util.nop;
+
+    connection.addEventListener('noConnection', function () {
+        onNoConnection();
+    });
+
+    connection.addEventListener('error', function () {
+        onError();
+    });
+
+    connection.addEventListener('connected', function () {
+        onConnected();
+    });
+
     return Object.create(null, {
         connect: {value: connection.connect},
         capture: {value: capture},
         onNoConnection: {set: function (x) {
-            connection.onNoConnection = x;
+            onNoConnection = x;
         }},
         onError: {set: function (x) {
-            connection.onError = x;
+            onError = x;
         }},
         onConnected: {set: function (x) {
-            connection.onConnected = x;
+            onConnected = x;
         }},
         ip: {set: function (x) {
             connectionSettings.ip = x;

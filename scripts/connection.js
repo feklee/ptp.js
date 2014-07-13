@@ -3,22 +3,21 @@
 /*global define */
 
 define([
-    './main-loop', './event-loop', './util'
-], function (mainLoop, eventLoop, util) {
+    './main-loop', './event-loop', './event-listeners-factory'
+], function (mainLoop, eventLoop, eventListenersFactory) {
     'use strict';
 
-    var connect, onConnected = util.nop, onError = util.nop,
-        onNoConnection = util.nop, isConnected = false,
-        isConnecting = false;
+    var connect, isConnected = false, isConnecting = false,
+        eventListeners = eventListenersFactory.create();
 
     mainLoop.onNoConnection = eventLoop.onNoConnection = function () {
-        onNoConnection();
+        eventListeners.run('noConnection');
         isConnected = false;
         isConnecting = false;
     };
 
     mainLoop.onError = eventLoop.onError = function (msg) {
-        onError(msg);
+        eventListeners.run('error', msg);
     };
 
     mainLoop.onInitialized = function () {
@@ -32,7 +31,7 @@ define([
     eventLoop.onInitialized = function () {
         mainLoop.onSessionOpened = function () {
             isConnected = true;
-            onConnected();
+            eventListeners.run('connected');
         };
         mainLoop.openSession();
     };
@@ -41,8 +40,9 @@ define([
     // safe.
     connect = function () {
         if (!navigator.mozTCPSocket) {
-            onError('navigator.mozTCPSocket not available');
-            onNoConnection();
+            eventListeners.run('error',
+                               'navigator.mozTCPSocket not available');
+            eventListeners.run('noConnection');
             return;
         }
 
@@ -57,14 +57,10 @@ define([
     };
 
     return Object.create(null, {
-        onNoConnection: {set: function (f) {
-            onNoConnection = f;
-        }},
-        onError: {set: function (f) {
-            onError = f;
-        }},
-        onConnected: {set: function (f) {
-            onConnected = f;
+        addEventListener: {value: eventListeners.add},
+        removeEventListener: {value: eventListeners.remove},
+        isConnected: {get: function () {
+            return isConnected;
         }},
         connect: {value: connect}
     });
