@@ -37,8 +37,8 @@ define([
         onConnected: {set: function (x) {
             onConnected = x;
         }},
-        host: {set: function (x) {
-            connectionSettings.host = x;
+        ip: {set: function (x) {
+            connectionSettings.ip = x;
         }},
         port: {set: function (x) {
             connectionSettings.port = x;

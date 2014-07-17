@@ -8,15 +8,15 @@ define(['log', 'ptp.js/ptp'], function (log, ptp) {
     var onClicked;
 
     onClicked = function () {
-        var ip = document.querySelector('section.connect input').value;
+        var host = document.querySelector('section.connect input').value;
 
-        if (ip === '') {
-            log.appendError('Empty IP');
+        if (host === '') {
+            log.appendError('Empty host');
             return;
         }
 
-        log.append('Connecting to ' + ip + '…');
-        ptp.ip = ip;
+        log.append('Connecting to ' + host + '…');
+        ptp.host = host;
         ptp.clientName = 'ptp.js demo';
         ptp.loggerOutputIsEnabled = true;
         // additional optional parameters: `port`, `clientGuid`
