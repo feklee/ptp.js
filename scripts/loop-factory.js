@@ -94,7 +94,7 @@ define([
         }
 
         this.socket = navigator.mozTCPSocket.open(
-            connectionSettings.ip,
+            connectionSettings.host,
             connectionSettings.port,
             {binaryType: 'arraybuffer'}
         );

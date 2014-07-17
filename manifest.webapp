@@ -1,9 +1,9 @@
 {
     "name": "ptp.js demo",
-    "description": "Demo of ptp.js functions",
-    "launch_path": "/demo/app.html",
+    "description": "Demo of ptp.js functions on Firefox OS (B2G)",
+    "launch_path": "/b2g_demo/app.html",
     "icons": {
-        "128": "/demo/app.png"
+        "128": "/b2g_demo/app.png"
     },
     "developer": {
         "name": "Developers of ptp.js",

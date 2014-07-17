@@ -1,0 +1,17 @@
+{
+    "name": "ptp",
+    "version": "2.0.0",
+    "author": "Developers of ptp.js",
+    "contributors": ["Felix E. Klee <felix.klee@inka.de>"],
+    "description": "For controlling cameras via PTP/IP",
+    "main": "node_main.js",
+    "dependencies": {
+        "requirejs": ">=2",
+        "commander": "2.x"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/feklee/ptp.js"
+    },
+    "license": "MIT"
+}

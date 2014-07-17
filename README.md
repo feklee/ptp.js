@@ -19,13 +19,22 @@ Documentation
 
 Basic usage:
 
- 1. Load the AMD module `scripts/ptp.js`. An object is created, let’s call it
-    `ptp`.
+ 1. Load the module, depending on platform:
+
+      + B2G: AMD module `scripts/ptp.js`
+
+      + Node.js module
+
+    An object is created, let’s call it `ptp`.
 
  2. Interface with the camera via properties such as `ptp.ip` and functions such
     as `ptp.connect()`.
 
-For an example, see the packaged demo app for Firefox OS: `manifest.webapp`
+For an example, see demos:
+
+  + B2G: Firefox OS app `manifest.webapp`
+
+  + Node.js: see `node-demo/app.js --help`
 
 
 Limitations
@@ -71,6 +80,12 @@ Coding conventions
   * Versioning: major.minor.bug-fix
 
     Incompatible changes to the API mandate an update of the major version.
+
+    Keep version up to date in:
+
+      + Git tags
+
+      + `package.json`
 
 Reading
 -------
@@ -120,5 +135,5 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [9]: http://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/f2012/jmv87/site/files/pima15740-2000.pdf
 [10]: http://www.gphoto.org/doc/ptpip.php
 [11]: http://www.cipa.jp/ptp-ip/documents_e/CIPA_DC-005_Whitepaper_ENG.pdf
-[12]: 2014-06-19+02_annotated_graph.png
+[12]: images/2014-06-19+02_annotated_graph.png
 [13]: https://marketplace.firefox.com/app/theta-control
