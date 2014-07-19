@@ -3,8 +3,8 @@
 /*global define, Uint8Array */
 
 define([
-    './packet', './data-factory', './connection-settings', './util', './logger'
-], function (packet, dataFactory, connectionSettings, util, logger) {
+    './packet', './util', './logger', './socket-factory'
+], function (packet, util, logger, socketFactory) {
     'use strict';
 
     var create, internalProto = {}, proto = {};
@@ -21,16 +21,15 @@ define([
     };
 
     internalProto.loggedSend = function (data) {
-        var ret = this.socket.send(data.buffer);
+        var ret = this.socket.send(data);
         this.logMsg('Sent: ' + data.toString());
         return ret;
     };
 
     // Parses incoming PTP/IP packets (there may be several fused), and - as far
     // as available - runs a callback for each.
-    internalProto.onData = function (event) {
-        var data = dataFactory.create(event.data), packetContentList,
-            internal = this;
+    internalProto.onData = function (data) {
+        var packetContentList, internal = this;
 
         this.logMsg('Received: ' + data.toString());
 
@@ -59,17 +58,7 @@ define([
         }
     };
 
-    internalProto.onSocketError = function (event) {
-        var msg;
-
-        if (typeof event.data === 'string') {
-            msg = event.data;
-        } else if (event.data !== undefined &&
-                   typeof event.data.name === 'string') {
-            msg = event.data.name;
-        } else {
-            msg = 'unknown';
-        }
+    internalProto.onSocketError = function (msg) {
         this.onError(util.withFirstCharCapitalized(this.name) + ' loop: ' +
                      msg);
 
@@ -79,47 +68,27 @@ define([
         // an error occurs after the connection has been opened, the
         // connection was lost, and the close event will be triggered after
         // the error event.
-        if (this.socket.readyState.match(/connecting|closed/) !== null) {
+        if (this.socket.isConnecting || this.socket.isClosed) {
             this.onNoConnection();
         }
     };
 
     internalProto.openSocket = function () {
-        var internal = this;
-
-        if (this.socket !== undefined &&
-                this.socket.readyState === 'open') {
+        if (!this.socket.isClosed) {
             this.onSocketOpened();
             return;
         }
 
-        this.socket = navigator.mozTCPSocket.open(
-            connectionSettings.host,
-            connectionSettings.port,
-            {binaryType: 'arraybuffer'}
-        );
-
-        this.socket.ondata = function (event) {
-            internal.onData(event);
-        };
-        this.socket.onopen = function () {
-            internal.onSocketOpened(internal);
-        };
-        this.socket.onerror = function (event) {
-            internal.onSocketError(event);
-        };
-        this.socket.onclose = function () {
-            internal.onNoConnection();
-        };
-        this.socket.ondrain = function () {
-            internal.onDrained();
-        };
+        if (!this.socket.open()) {
+            this.onError('Cannot create socket');
+            this.onNoConnection();
+        }
     };
 
     // Works only on an open socket. Returns false iff send could not be
     // scheduled.
     internalProto.scheduleSend = function (data) {
-        if (this.socket === undefined || this.socket.readyState !== 'open') {
+        if (!this.socket.isClosed) {
             return false;
         }
 
@@ -130,6 +99,18 @@ define([
         }
 
         return true;
+    };
+
+    internalProto.prepareSocket = function () {
+        var internal = this;
+
+        this.socket.onData = internalProto.onData.bind(this);
+        this.socket.onOpen = function () {
+            internal.onSocketOpened();
+        };
+        this.socket.onError = function (event) {
+            internal.onSocketError(event);
+        };
     };
 
     create = function (name) {
@@ -152,8 +133,11 @@ define([
                 value: util.nop,
                 writable: true
             },
-            name: {value: name}
+            name: {value: name},
+            socket: {value: socketFactory.create()}
         });
+
+        internal.prepareSocket();
 
         internal.onDataCallbacks[packet.types.initFail] =
             function () {

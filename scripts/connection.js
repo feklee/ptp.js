@@ -39,13 +39,6 @@ define([
     // Calling this function again, even during the process of connecting, is
     // safe.
     connect = function () {
-        if (!navigator.mozTCPSocket) {
-            eventListeners.run('error',
-                               'navigator.mozTCPSocket not available');
-            eventListeners.run('noConnection');
-            return;
-        }
-
         if (isConnected) {
             return;
         }

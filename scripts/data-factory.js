@@ -1,3 +1,8 @@
+// The implementation as of mid July 2014 not very efficient, though it should
+// be sufficient for small data packages. For bigger data packages it is would
+// be better to manipulate `Uint8Array` objects directly, at the expense of user
+// friendlyness of the API.
+
 /*jslint browser: true, maxerr: 50, maxlen: 80 */
 
 /*global define, ArrayBuffer, Uint8Array */

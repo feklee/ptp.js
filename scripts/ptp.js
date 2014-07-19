@@ -4,11 +4,12 @@
 
 define([
     './data-factory', './main-loop', './connection', './command',
-    './set-device-property', './get-device-property', './connection-settings',
-    './capture', './logger', './util'
+    './set-device-property', './get-device-property',
+    './capture', './logger', './util', './socket-factory',
+    './connection-settings'
 ], function (dataFactory, mainLoop, connection,
              command, setDeviceProperty, getDeviceProperty,
-             connectionSettings, capture, logger, util) {
+             capture, logger, util, socketFactory, connectionSettings) {
     'use strict';
 
     var onNoConnection = util.nop, onError = util.nop, onConnected = util.nop;

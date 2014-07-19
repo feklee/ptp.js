@@ -9,7 +9,7 @@ define(function () {
 
     log = function () {
         if (outputIsEnabled) {
-            window.console.log.apply(this, arguments);
+            window.console.log.apply(window.console, arguments);
         }
     };
 
