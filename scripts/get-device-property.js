@@ -9,28 +9,28 @@ define([
 
     var onDevicePropertyGot;
 
-    onDevicePropertyGot = function (settings) {
-        util.runIfSet(settings.onSuccess, {
-            dataPacket: settings.dataPacket
+    onDevicePropertyGot = function (options) {
+        util.runIfSet(options.onSuccess, {
+            dataPacket: options.dataPacket
         });
     };
 
-    return function (settings) {
+    return function (options) {
         var onSuccess, dataPacket = dataFactory.create();
 
-        onSuccess = function (settings2) {
+        onSuccess = function (options2) {
             onDevicePropertyGot({
-                onSuccess: settings.onSuccess,
-                transactionId: settings2.transactionId,
-                argsData: settings2.receivedContent.argsData,
+                onSuccess: options.onSuccess,
+                transactionId: options2.transactionId,
+                argsData: options2.receivedContent.argsData,
                 dataPacket: dataPacket
             });
         };
 
         command.sendCommand({
             operationCode: mainLoop.operationCodes.getDevicePropValue,
-            args: [settings.code],
-            payload: settings.data,
+            args: [options.code],
+            payload: options.data,
             onDataPacket: function (packetContent) {
                 dataPacket.appendData(packetContent.payloadData);
             },
@@ -38,7 +38,7 @@ define([
                 dataPacket.appendData(packetContent.payloadData);
             },
             onSuccess: onSuccess,
-            onFailure: settings.onFailure
+            onFailure: options.onFailure
         });
     };
 });

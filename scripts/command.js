@@ -46,12 +46,12 @@ define([
     };
     Object.freeze(devicePropCodes);
 
-    onCmdResponse = function (settings) {
-        if (settings.receivedContent.responseCode ===
+    onCmdResponse = function (options) {
+        if (options.receivedContent.responseCode ===
                 mainLoop.responseCodes.ok) {
-            util.runIfSet(settings.onSuccess, settings);
+            util.runIfSet(options.onSuccess, options);
         } else {
-            util.runIfSet(settings.onFailure);
+            util.runIfSet(options.onFailure);
         }
     };
 
@@ -78,54 +78,54 @@ define([
         }
     };
 
-    setCallbacks = function (settings) {
+    setCallbacks = function (options) {
         mainLoop.cmdResponseCallbacks[packet.transactionId] =
             function (receivedContent) {
                 onCmdResponse({
-                    onSuccess: settings.onSuccess,
-                    onFailure: settings.onFailure,
+                    onSuccess: options.onSuccess,
+                    onFailure: options.onFailure,
                     receivedContent: receivedContent,
                     transactionId: packet.transactionId
                 });
             };
 
-        if (settings.onStartDataPacket !== undefined) {
+        if (options.onStartDataPacket !== undefined) {
             mainLoop.startDataPacketCallbacks[packet.transactionId] =
-                settings.onStartDataPacket;
+                options.onStartDataPacket;
         }
 
-        if (settings.onDataPacket !== undefined) {
+        if (options.onDataPacket !== undefined) {
             mainLoop.dataPacketCallbacks[packet.transactionId] =
-                settings.onDataPacket;
+                options.onDataPacket;
         }
 
-        if (settings.onEndDataPacket !== undefined) {
+        if (options.onEndDataPacket !== undefined) {
             mainLoop.endDataPacketCallbacks[packet.transactionId] =
-                settings.onEndDataPacket;
+                options.onEndDataPacket;
         }
     };
 
-    sendCommand = function (settings) {
+    sendCommand = function (options) {
         var req;
 
         packet.startNewTransaction();
 
-        req = packet.createCmdRequest(settings.operationCode,
-                                      settings.args);
+        req = packet.createCmdRequest(options.operationCode,
+                                      options.args);
 
         if (!mainLoop.scheduleSend(req)) {
-            settings.onFailure();
+            options.onFailure();
             return;
         }
 
-        if (settings.payload !== undefined) {
-            if (!sendPayload(settings.payload)) {
-                settings.onFailure();
+        if (options.payload !== undefined) {
+            if (!sendPayload(options.payload)) {
+                options.onFailure();
                 return;
             }
         }
 
-        setCallbacks(settings); // call *after* sending succeeded, to avoid
+        setCallbacks(options); // call *after* sending succeeded, to avoid
                                 // stale callback entries
     };
 

@@ -50,17 +50,9 @@ define(function () {
         });
 
         return Object.create(null, {
-            add: {value: function (type, listener) {
-                internal.add(type, listener);
-            }},
-
-            remove: {value: function (type, listener) {
-                internal.remove(type, listener);
-            }},
-
-            run: {value: function (type) {
-                internal.run(type);
-            }}
+            add: {value: internal.add.bind(internal)},
+            remove: {value: internal.remove.bind(internal)},
+            run: {value: internal.run.bind(internal)}
         });
     };
 

@@ -9,39 +9,39 @@ define([
 
     var onCaptureInitiated;
 
-    onCaptureInitiated = function (settings) {
+    onCaptureInitiated = function (options) {
         var onNoConnection = function () {
             connection.removeEventListener('noConnection',
                                            onNoConnection);
-            settings.onFailure();
+            options.onFailure();
         };
 
         connection.addEventListener('noConnection', onNoConnection);
 
-        eventLoop.captureCompleteCallbacks[settings.transactionId] =
+        eventLoop.captureCompleteCallbacks[options.transactionId] =
             function () {
                 connection.removeEventListener('noConnection',
                                                onNoConnection);
-                util.runIfSet(settings.onSuccess);
+                util.runIfSet(options.onSuccess);
             };
     };
 
-    return function (settings) {
+    return function (options) {
         var onSuccess;
 
-        onSuccess = function (settings2) {
+        onSuccess = function (options2) {
             onCaptureInitiated({
-                onFailure: settings.onFailure,
-                onSuccess: settings.onSuccess,
-                transactionId: settings2.transactionId
+                onFailure: options.onFailure,
+                onSuccess: options.onSuccess,
+                transactionId: options2.transactionId
             });
         };
 
         command.sendCommand({
             operationCode: mainLoop.operationCodes.initiateCapture,
-            args: [settings.storageId, settings.objectFormatCode],
+            args: [options.storageId, options.objectFormatCode],
             onSuccess: onSuccess,
-            onFailure: settings.onFailure
+            onFailure: options.onFailure
         });
     };
 });

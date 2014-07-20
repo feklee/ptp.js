@@ -1,4 +1,4 @@
-/*jslint browser: true, maxerr: 50, maxlen: 80 */
+/*jslint node: true, browser: true, maxerr: 50, maxlen: 80 */
 
 /*global define */
 
@@ -9,7 +9,7 @@ define(function () {
 
     log = function () {
         if (outputIsEnabled) {
-            window.console.log.apply(window.console, arguments);
+            console.log.apply(console, arguments);
         }
     };
 

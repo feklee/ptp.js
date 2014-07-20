@@ -80,7 +80,6 @@ define([
         }
 
         if (!this.socket.open()) {
-            this.onError('Cannot create socket');
             this.onNoConnection();
         }
     };
@@ -110,6 +109,9 @@ define([
         };
         this.socket.onError = function (event) {
             internal.onSocketError(event);
+        };
+        this.socket.onClose = function () {
+            internal.onNoConnection();
         };
     };
 

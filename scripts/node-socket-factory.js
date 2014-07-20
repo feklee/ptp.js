@@ -1,6 +1,6 @@
-// Socket implementation for privileged Mozilla web apps.
+// Node.js socket implementation.
 
-/*jslint browser: true, maxerr: 50, maxlen: 80 */
+/*jslint node: true, maxerr: 50, maxlen: 80 */
 
 /*global define */
 
@@ -9,24 +9,11 @@ define([
 ], function (util, connectionSettings, dataFactory) {
     'use strict';
 
-    var create, internalProto = {}, getErrorMsg;
-
-    getErrorMsg = function (event) {
-        if (typeof event.data === 'string') {
-            return event.data;
-        }
-
-        if (event.data !== undefined &&
-                typeof event.data.name === 'string') {
-            return event.data.name;
-        }
-
-        return 'unknown';
-    };
+    var create, internalProto = {};
 
     internalProto.getIsConnecting = function () {
-        return (this.mozTcpSocket !== undefined &&
-                this.mozTcpSocket.readyState.match(/connecting/) !== null);
+        return (this.client !== undefined &&
+                this.client.readyState.match(/connecting/) !== null);
     };
 
     internalProto.getIsClosed = function () {
@@ -35,35 +22,30 @@ define([
     };
 
     internalProto.open = function () {
-        var internal = this;
+        var internal = this, net = require('net');
 
-        if (navigator.mozTCPSocket === undefined ||
-                navigator.mozTCPSocket === null) {
-            this.onError('navigator.mozTCPSocket not available');
-            return false;
-        }
-
-        this.mozTcpSocket = navigator.mozTCPSocket.open(
-            connectionSettings.host,
-            connectionSettings.port,
-            {binaryType: 'arraybuffer'}
-        );
-
-        this.mozTcpSocket.ondata = function (event) {
-            internal.onData(dataFactory.create(event.data));
-        };
-        this.mozTcpSocket.onopen = function () {
+        this.client = net.createConnection({
+            port: connectionSettings.port,
+            host: connectionSettings.host
+        }, function () {
             internal.onOpen();
-        };
-        this.mozTcpSocket.onerror = function (event) {
-            internal.onError(getErrorMsg(event));
-        };
-        this.mozTcpSocket.onclose = function () {
+        });
+
+        this.client.on('data', function (data) {
+            internal.onData(dataFactory.create(data));
+        });
+
+        this.client.on('error', function (error) {
+            internal.onError(error.message);
+        });
+
+        this.client.on('close', function () {
             internal.onClose();
-        };
-        this.mozTcpSocket.ondrain = function () {
+        });
+
+        this.client.on('drain', function () {
             internal.onDrained();
-        };
+        });
 
         return true;
     };
@@ -79,13 +61,13 @@ define([
 
     create = function () {
         var internal = Object.create(internalProto, {
-            mozTcpSocket: {value: undefined, writable: true},
-            onData: {value: util.nop, writable: true},
-            onOpen: {value: util.nop, writable: true},
-            onError: {value: util.nop, writable: true},
-            onClose: {value: util.nop, writable: true},
-            onDrain: {value: util.nop, writable: true}
-        });
+                client: {value: undefined, writable: true},
+                onData: {value: util.nop, writable: true},
+                onOpen: {value: util.nop, writable: true},
+                onError: {value: util.nop, writable: true},
+                onClose: {value: util.nop, writable: true},
+                onDrain: {value: util.nop, writable: true}
+            });
 
         return Object.create(null, {
             open: {value: function () {

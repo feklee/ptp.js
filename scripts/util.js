@@ -51,8 +51,8 @@ define(function () {
     };
 
     // PTP date string from JavaScript date object
-    dateTimeString = function (settings) {
-        var d = settings.date, s;
+    dateTimeString = function (options) {
+        var d = options.date, s;
         s = d.getFullYear() +
             zeroPad(d.getMonth() + 1) +
             zeroPad(d.getDate()) +
@@ -63,11 +63,11 @@ define(function () {
             '.' +
             Math.round(d.getMilliseconds() / 100);
 
-        if (settings.appendTimeZone === 'Z') {
+        if (options.appendTimeZone === 'Z') {
             return s + 'Z';
         }
 
-        if (settings.appendTimeZone === '+/-hhmm') {
+        if (options.appendTimeZone === '+/-hhmm') {
             return s + timeZoneString(d);
         }
 

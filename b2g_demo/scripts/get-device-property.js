@@ -12,9 +12,9 @@ define(['log', 'ptp.js/ptp'], function (log, ptp) {
 
         ptp.getDeviceProperty({
             code: ptp.devicePropCodes.batteryLevel,
-            onSuccess: function (settings) {
+            onSuccess: function (options) {
                 log.append('Got battery level (hex): ' +
-                           settings.dataPacket.toString());
+                           options.dataPacket.toString());
             },
             onFailure: function () {
                 log.appendError('Getting battery level failed');

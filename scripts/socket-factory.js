@@ -2,10 +2,18 @@
 
 /*global define */
 
-define(['./mozilla-socket-factory'], function (mozillaSocketFactory) {
+define([
+    './mozilla-socket-factory', './node-socket-factory'
+], function (mozillaSocketFactory, nodeSocketFactory) {
     'use strict';
 
-    var implementation = mozillaSocketFactory; // default
+    var implementation;
+
+    if (typeof window === 'object') {
+        implementation = mozillaSocketFactory;
+    } else {
+        implementation = nodeSocketFactory;
+    }
 
     return implementation;
 });

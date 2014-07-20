@@ -5,25 +5,24 @@
 define([
     './data-factory', './main-loop', './connection', './command',
     './set-device-property', './get-device-property',
-    './capture', './logger', './util', './socket-factory',
-    './connection-settings'
+    './capture', './logger', './util', './connection-settings'
 ], function (dataFactory, mainLoop, connection,
              command, setDeviceProperty, getDeviceProperty,
-             capture, logger, util, socketFactory, connectionSettings) {
+             capture, logger, util, connectionSettings) {
     'use strict';
 
     var onNoConnection = util.nop, onError = util.nop, onConnected = util.nop;
 
     connection.addEventListener('noConnection', function () {
-        onNoConnection();
+        onNoConnection.apply(this, arguments);
     });
 
     connection.addEventListener('error', function () {
-        onError();
+        onError.apply(this, arguments);
     });
 
     connection.addEventListener('connected', function () {
-        onConnected();
+        onConnected.apply(this, arguments);
     });
 
     return Object.create(null, {
