@@ -2,23 +2,23 @@
 
 'use strict';
 
-module.exports = function (settings) {
-    var ptp = settings.ptp;
+module.exports = function (options) {
+    var ptp = options.ptp;
 
-    console.log('Connecting to ' + settings.host + '…');
-    ptp.host = settings.host;
+    console.log('Connecting to ' + options.host + '...');
+    ptp.host = options.host;
     ptp.clientName = 'ptp.js demo';
-    ptp.loggerOutputIsEnabled = true;
+    ptp.loggerOutputIsEnabled = options.verboseOutputIsRequested;
     // additional optional parameters: `port`, `clientGuid`
-    ptp.onNoConnection = function () {
-        console.error('No connection');
+    ptp.onDisconnected = function () {
+        console.log('Disconnected');
     };
     ptp.onError = function (msg) {
         console.error(msg);
     };
     ptp.onConnected = function () {
         console.log('Connected');
-        settings.onConnected();
+        options.onConnected();
     };
     ptp.connect();
 };

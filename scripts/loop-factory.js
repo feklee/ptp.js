@@ -61,16 +61,6 @@ define([
     internalProto.onSocketError = function (msg) {
         this.onError(util.withFirstCharCapitalized(this.name) + ' loop: ' +
                      msg);
-
-        // From TCPSocket documentation on MDN as of June 2014: If an error
-        // occurs before the connection has been opened, the error was
-        // connection refused, and the close event will not be triggered. If
-        // an error occurs after the connection has been opened, the
-        // connection was lost, and the close event will be triggered after
-        // the error event.
-        if (this.socket.isConnecting || this.socket.isClosed) {
-            this.onNoConnection();
-        }
     };
 
     internalProto.openSocket = function () {
@@ -79,15 +69,15 @@ define([
             return;
         }
 
-        if (!this.socket.open()) {
-            this.onNoConnection();
-        }
+        this.socket.open();
     };
 
     // Works only on an open socket. Returns false iff send could not be
     // scheduled.
     internalProto.scheduleSend = function (data) {
-        if (!this.socket.isClosed) {
+        console.log('sched');
+        console.log(this.socket.isClosed);
+        if (this.socket.isClosed) {
             return false;
         }
 
@@ -111,8 +101,12 @@ define([
             internal.onSocketError(event);
         };
         this.socket.onClose = function () {
-            internal.onNoConnection();
+            internal.onDisconnected();
         };
+    };
+
+    internalProto.stop = function () {
+        this.socket.close();
     };
 
     create = function (name) {
@@ -127,7 +121,7 @@ define([
                 writable: true
             },
             dataScheduledForSending: {value: []},
-            onNoConnection: {
+            onDisconnected: {
                 value: util.nop,
                 writable: true
             },
@@ -160,12 +154,13 @@ define([
             onDataCallbacks: {get: function () {
                 return internal.onDataCallbacks;
             }},
-            onNoConnection: {set: function (f) {
-                internal.onNoConnection = f;
+            onDisconnected: {set: function (f) {
+                internal.onDisconnected = f;
             }},
             onError: {set: function (f) {
                 internal.onError = f;
-            }}
+            }},
+            stop: {value: internal.stop.bind(internal)}
         });
     };
 

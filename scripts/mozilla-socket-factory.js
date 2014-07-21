@@ -34,6 +34,19 @@ define([
                 this.mozTcpSocket.readyState.match(/closed/) !== null);
     };
 
+    internalProto.onMozTcpSocketError = function (event) {
+        this.onError(getErrorMsg(event));
+
+        // From TCPSocket documentation on MDN as of June 2014: If an error
+        // occurs before the connection has been opened, the error was
+        // connection refused, and the close event will not be triggered. If an
+        // error occurs after the connection has been opened, the connection was
+        // lost, and the close event will be triggered after the error event.
+        if (this.getIsConnecting() || this.getIsClosed()) {
+            this.onClose();
+        }
+    };
+
     internalProto.open = function () {
         var internal = this;
 
@@ -55,9 +68,7 @@ define([
         this.mozTcpSocket.onopen = function () {
             internal.onOpen();
         };
-        this.mozTcpSocket.onerror = function (event) {
-            internal.onError(getErrorMsg(event));
-        };
+        this.mozTcpSocket.onerror = this.onMozTcpSocketError.bind(this);
         this.mozTcpSocket.onclose = function () {
             internal.onClose();
         };
@@ -68,13 +79,21 @@ define([
         return true;
     };
 
+    internalProto.close = function () {
+        if (this.mozTcpSocket !== undefined) {
+            this.mozTcpSocket.close();
+        }
+    };
+
     // Returns false iff it's better to wait for the drain event before sending
     // more data.
     internalProto.send = function (data) {
-        if (this.mozTcpSocket !== undefined) {
-            return this.mozTcpSocket.send(data.buffer);
+        if (this.mozTcpSocket === undefined) {
+            this.onError('mozTcpSocket not defined for sending');
+            return true;
         }
-        return true;
+
+        return this.mozTcpSocket.send(data.buffer);
     };
 
     create = function () {
@@ -88,14 +107,11 @@ define([
         });
 
         return Object.create(null, {
-            open: {value: function () {
-                return internal.open();
-            }},
-            send: {value: function (data) {
-                return internal.send(data);
-            }},
-            isClosed: {get: internal.getIsClosed},
-            isConnecting: {get: internal.getIsConnecting},
+            open: {value: internal.open.bind(internal)},
+            close: {value: internal.close.bind(internal)},
+            send: {value: internal.send.bind(internal)},
+            isClosed: {get: internal.getIsClosed.bind(internal)},
+            isConnecting: {get: internal.getIsConnecting.bind(internal)},
             onData: {set: function (f) {
                 internal.onData = f;
             }},
@@ -105,7 +121,7 @@ define([
             onError: {set: function (f) {
                 internal.onError = f;
             }},
-            onClose: {set: function (f) {
+            onClose: {set: function (f) { // Called also on socket error
                 internal.onClose = f;
             }},
             onDrain: {set: function (f) {

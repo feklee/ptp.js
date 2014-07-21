@@ -8,22 +8,29 @@ var packageJson = require('../package.json'),
     host,
     commandName;
 
-program.on('--help', function () {
-    console.log('  Host: camera\'s address, e.g. 192.168.1.1');
-    console.log('');
-    commands.help();
-});
+program
+    .option('-v, --verbose', 'print verbose messages')
+    .on('--help', function () {
+        console.log('  Host: camera\'s address, e.g. 192.168.1.1');
+        console.log('');
+        commands.help();
+    });
 
 program
     .version(packageJson.version)
-    .usage('[options] <host> <command>')
+    .usage('[options] <host> <command> [parameters]')
     .parse(process.argv);
 
-if (program.args.length !== 2) {
+if (program.args.length < 2) {
     program.help();
 }
 
 host = program.args.shift();
 commandName = program.args.shift();
 
-commands.run(host, commandName);
+commands.run({
+    verboseOutputIsRequested: program.verbose,
+    host: host,
+    commandName: commandName,
+    parameters: program.args
+});

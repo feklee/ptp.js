@@ -7,11 +7,13 @@ define([
 ], function (mainLoop, eventLoop, eventListenersFactory) {
     'use strict';
 
-    var connect, isConnected = false, isConnecting = false,
+    var connect, disconnect, isConnected = false, isConnecting = false,
         eventListeners = eventListenersFactory.create();
 
-    mainLoop.onNoConnection = eventLoop.onNoConnection = function () {
-        eventListeners.run('noConnection');
+    mainLoop.onDisconnected = eventLoop.onDisconnected = function () {
+        if (isConnected) {
+            eventListeners.run('disconnected');
+        }
         isConnected = false;
         isConnecting = false;
     };
@@ -49,12 +51,18 @@ define([
         }
     };
 
+    disconnect = function () {
+        mainLoop.stop();
+        eventLoop.stop();
+    };
+
     return Object.create(null, {
         addEventListener: {value: eventListeners.add},
         removeEventListener: {value: eventListeners.remove},
         isConnected: {get: function () {
             return isConnected;
         }},
-        connect: {value: connect}
+        connect: {value: connect},
+        disconnect: {value: disconnect}
     });
 });

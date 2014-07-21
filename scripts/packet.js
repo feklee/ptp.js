@@ -155,16 +155,20 @@ define(['./data-factory'], function (dataFactory) {
         var data = dataFactory.create(), i, x,
             maxLen = 80; // arbitrary limit, possibly could be longer
 
+        console.log('1');
         for (i = 0; i < 16; i += 1) {
             x = (guid[i] === undefined) ? 0 : guid[i];
             data.setByte(headerLength + i, x);
         }
 
+        console.log('2');
         data.appendWstring(name.slice(0, maxLen));
         data.appendDword(1);
 
+        console.log('4');
         setHeader(data, types.initCommandRequest);
 
+        console.log('5');
         return data;
     };
 

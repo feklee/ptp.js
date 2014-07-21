@@ -6,7 +6,7 @@ define(function () {
     'use strict';
 
     var nop, extend, runIfSet, withFirstCharCapitalized, dateTimeString,
-        zeroPad, timeZoneString;
+        zeroPad, timeZoneString, getIsRunningInBrowser;
 
     nop = function () {
         return;
@@ -74,11 +74,16 @@ define(function () {
         return s;
     };
 
+    getIsRunningInBrowser = function () {
+        return typeof window === 'object';
+    };
+
     return Object.create(null, {
         nop: {value: nop},
         extend: {value: extend},
         runIfSet: {value: runIfSet},
         withFirstCharCapitalized: {value: withFirstCharCapitalized},
-        dateTimeString: {value: dateTimeString}
+        dateTimeString: {value: dateTimeString},
+        isRunningInBrowser: {get: getIsRunningInBrowser}
     });
 });

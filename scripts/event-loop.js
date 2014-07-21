@@ -52,8 +52,8 @@ define([
         onInitialized: {set: function (x) {
             onInitialized = x;
         }},
-        onNoConnection: {set: function (x) {
-            loop.onNoConnection = x;
+        onDisconnected: {set: function (x) {
+            loop.onDisconnected = x;
         }},
         onError: {set: function (x) {
             loop.onError = x;
@@ -67,6 +67,7 @@ define([
         }},
         captureCompleteCallbacks: {get: function () {
             return captureCompleteCallbacks;
-        }}
+        }},
+        stop: {value: loop.stop}
     });
 });

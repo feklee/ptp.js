@@ -113,8 +113,8 @@ define(['./packet', './loop-factory'], function (packet, loopFactory) {
         onInitialized: {set: function (x) {
             onInitialized = x;
         }},
-        onNoConnection: {set: function (x) {
-            loop.onNoConnection = x;
+        onDisconnected: {set: function (x) {
+            loop.onDisconnected = x;
         }},
         onError: {set: function (x) {
             loop.onError = x;
@@ -150,6 +150,7 @@ define(['./packet', './loop-factory'], function (packet, loopFactory) {
         }},
         endDataPacketCallbacks: {get: function () {
             return endDataPacketCallbacks;
-        }}
+        }},
+        stop: {value: loop.stop}
     });
 });

@@ -3,11 +3,11 @@
 // be better to manipulate `Uint8Array` objects directly, at the expense of user
 // friendlyness of the API.
 
-/*jslint browser: true, maxerr: 50, maxlen: 80 */
+/*jslint browser: true, node: true, maxerr: 50, maxlen: 80 */
 
 /*global define, ArrayBuffer, Uint8Array */
 
-define(function () {
+define(['./util'], function (util) {
     'use strict';
 
     var create, createByte, createWord, createDword, createWstring,
@@ -137,10 +137,13 @@ define(function () {
             arr: {value: []}
         });
 
-        if (values instanceof ArrayBuffer) {
+        if (typeof ArrayBuffer === 'function' &&
+                values instanceof ArrayBuffer) {
             internal.appendArray(new Uint8Array(values));
         } else if (values instanceof Array) {
             internal.appendArray(values);
+        } else if (typeof Buffer === 'function' && values instanceof Buffer) {
+            internal.appendArray(Array.prototype.slice.call(values, 0));
         }
 
         return Object.create(null, {
@@ -201,7 +204,9 @@ define(function () {
             }},
 
             buffer: {get: function () {
-                return (new Uint8Array(internal.arr)).buffer;
+                return (util.isRunningInBrowser ?
+                        (new Uint8Array(internal.arr)).buffer :
+                        new Buffer(internal.arr));
             }},
 
             toString: {value: function () {

@@ -3,22 +3,26 @@
 'use strict';
 
 var commands, help, run, lengthOfLongestName, spacing, findCommand,
-    ptp = require('../..');
+    ptp = require('../..'),
+    capture = require('./capture'),
+    getDeviceProperty = require('./get_device_property');
 
 commands = [
     {
         name: 'capture',
         description: 'initiate capture',
-        value: function () {
-            require('commands/capture');
-        }
+        run: capture
     },
     {
-        name: 'set_device_property',
-        description: 'sets specified property to specified value',
-        value: function () {
-            require('commands/set_device_property');
-        }
+        name: 'get_device_property',
+        parameters: ['code'],
+        description: 'get value of specified property',
+        run: getDeviceProperty
+    },
+    {
+        name: 'list_device_properties',
+        description: 'list standard device property codes',
+        run: getDeviceProperty
     }
 ];
 
@@ -43,6 +47,13 @@ help = function () {
                     spacing(l - command.name.length + 2) +
                     command.description);
     });
+    console.log('');
+    console.log('  Examples:');
+    console.log('');
+    console.log('    app 192.168.1.1 capture');
+    console.log('    app 192.168.1.1 list_device_properties');
+    console.log('    app 192.168.1.1 get_device_property 0x5001');
+    console.log('    app 192.168.1.1 set_device_property 1000');
 };
 
 findCommand = function (commandName) {
@@ -56,18 +67,19 @@ findCommand = function (commandName) {
     return null;
 };
 
-run = function (host, commandName) {
-    var command = findCommand(commandName);
+run = function (options) {
+    var command = findCommand(options.commandName);
 
     if (command === null) {
-        console.error('Unknown command:', commandName);
+        console.error('Unknown command:', options.commandName);
         return;
     }
 
     require('./connect')({
         ptp: ptp,
-        host: host,
-        onConnected: command.run
+        host: options.host,
+        onConnected: command.run,
+        verboseOutputIsRequested: options.verboseOutputIsRequested
     });
 };
 
