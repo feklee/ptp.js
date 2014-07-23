@@ -2,19 +2,27 @@
 
 'use strict';
 
-var ptp = require('../../node_main');
+var ptp = require('../..'), onConnected;
 
-module.exports = function () {
+onConnected = function () {
+    console.log('Capturing...');
     ptp.capture({
         storageId: 0, // optional
         objectFormatCode: 0, // optional
         onSuccess: function () {
             console.log('Finished');
+            ptp.disconnect();
         },
         onFailure: function () {
             console.error('Failed');
+            ptp.disconnect();
         }
     });
+};
 
-    console.log('Capturing…');
+module.exports = function (host) {
+    require('./connect')({
+        host: host,
+        onConnected: onConnected
+    });
 };

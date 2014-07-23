@@ -3,12 +3,11 @@
 'use strict';
 
 module.exports = function (options) {
-    var ptp = options.ptp;
+    var ptp = require('../..');
 
     console.log('Connecting to ' + options.host + '...');
     ptp.host = options.host;
     ptp.clientName = 'ptp.js demo';
-    ptp.loggerOutputIsEnabled = options.verboseOutputIsRequested;
     // additional optional parameters: `port`, `clientGuid`
     ptp.onDisconnected = function () {
         console.log('Disconnected');

@@ -3,12 +3,13 @@
 /*global define */
 
 define([
-    './data-factory', './main-loop', './connection', './command',
+    './data-factory', './main-loop', './connection',
     './set-device-property', './get-device-property',
-    './capture', './logger', './util', './connection-settings'
+    './capture', './logger', './util', './connection-settings',
+    './device-prop-codes'
 ], function (dataFactory, mainLoop, connection,
-             command, setDeviceProperty, getDeviceProperty,
-             capture, logger, util, connectionSettings) {
+             setDeviceProperty, getDeviceProperty,
+             capture, logger, util, connectionSettings, devicePropCodes) {
     'use strict';
 
     var onDisconnected = util.nop, onError = util.nop, onConnected = util.nop;
@@ -51,7 +52,7 @@ define([
             mainLoop.clientName = x;
         }},
         devicePropCodes: {get: function () {
-            return command.devicePropCodes;
+            return devicePropCodes;
         }},
         setDeviceProperty: {value: setDeviceProperty},
         getDeviceProperty: {value: getDeviceProperty},

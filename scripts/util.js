@@ -6,7 +6,7 @@ define(function () {
     'use strict';
 
     var nop, extend, runIfSet, withFirstCharCapitalized, dateTimeString,
-        zeroPad, timeZoneString, getIsRunningInBrowser;
+        zeroPad, timeZoneString, getIsRunningInBrowser, capitalize;
 
     nop = function () {
         return;
@@ -78,12 +78,19 @@ define(function () {
         return typeof window === 'object';
     };
 
+    capitalize = function (s) {
+        return s.replace(/^[a-z]/, function (m) {
+            return m.toUpperCase();
+        });
+    };
+
     return Object.create(null, {
         nop: {value: nop},
         extend: {value: extend},
         runIfSet: {value: runIfSet},
         withFirstCharCapitalized: {value: withFirstCharCapitalized},
         dateTimeString: {value: dateTimeString},
-        isRunningInBrowser: {get: getIsRunningInBrowser}
+        isRunningInBrowser: {get: getIsRunningInBrowser},
+        capitalize: {value: capitalize}
     });
 });

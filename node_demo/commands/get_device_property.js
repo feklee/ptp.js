@@ -2,18 +2,33 @@
 
 'use strict';
 
-var ptp = require('../../node_main');
+var ptp = require('../..'), util = require('./util'), onConnected;
 
-module.exports = function (deviceProperty) {
+onConnected = function (propCode) {
+    var code, ptp = require('../../node_main');
+
+    /*jslint evil: true */
+    code = eval(propCode);
+    /*jslint evil: false */
+
+    console.log('Getting ' + util.prettyPrintDeviceProperty(code) + '...');
+
     ptp.getDeviceProperty({
-        code: ptp.devicePropCodes[deviceProperty],
+        code: code,
         onSuccess: function (options) {
-            console.log('Value: ' + options.dataPacket.toString());
+            console.log('Value (hex): ' + options.dataPacket.toString());
+            ptp.disconnect();
         },
         onFailure: function () {
             console.error('Failed');
+            ptp.disconnect();
         }
     });
+};
 
-    console.log('Getting ' + deviceProperty + '…');
+module.exports = function (host, propCode) {
+    require('./connect')({
+        host: host,
+        onConnected: onConnected.bind(this, propCode)
+    });
 };

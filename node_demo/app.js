@@ -2,11 +2,10 @@
 
 'use strict';
 
-var packageJson = require('../package.json'),
+var host, commandName, parameters,
+    packageJson = require('../package.json'),
     program = require('commander'),
-    commands = require('./commands'),
-    host,
-    commandName;
+    commands = require('./commands');
 
 program
     .option('-v, --verbose', 'print verbose messages')
@@ -18,19 +17,20 @@ program
 
 program
     .version(packageJson.version)
-    .usage('[options] <host> <command> [parameters]')
+    .usage('[options] <command> [parameters]')
     .parse(process.argv);
 
-if (program.args.length < 2) {
+commandName = program.args.shift();
+parameters = program.args;
+
+if (!commands.syntaxIsCorrect({commandName: commandName,
+                               parameters: parameters})) {
     program.help();
 }
 
-host = program.args.shift();
-commandName = program.args.shift();
-
+console.log('');
 commands.run({
     verboseOutputIsRequested: program.verbose,
-    host: host,
     commandName: commandName,
     parameters: program.args
 });

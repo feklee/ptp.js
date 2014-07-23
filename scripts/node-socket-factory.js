@@ -52,7 +52,7 @@ define([
     };
 
     internalProto.send = function (data) {
-        if (this.mozTcpSocket === undefined) {
+        if (this.client === undefined) {
             this.onError('client not defined for sending');
             return true;
         }

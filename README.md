@@ -36,6 +36,8 @@ For an example, see demos:
 
   + Node.js: see `node-demo/app.js --help`
 
+    The interesting part is the code for the individual commands.
+
 
 Limitations
 ===========
@@ -129,9 +131,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [2]: http://en.wikipedia.org/wiki/Ricoh
 [3]: mailto:felix.klee@inka.de
 [4]: http://mobilehackerz.jp/contents/Review/RICOH_THETA
-[6]: http://mobilehackerz.jp/contents?plugin=attach&pcmd=info&file=ThetaShutter_PQIAirPen002.zip&refer=Review%2FRICOH*THETA%2FRemote
+[6]: http://mobilehackerz.jp/contents?plugin=attach&pcmd=info&file=ThetaShutter_PQIAirPen002.zip&refer=Review%2FRICOH_THETA%2FRemote
 [7]: http://requirejs.org/
-[8]: https://developer.mozilla.org/en-US/docs/WebAPI/TCP*Socket
+[8]: https://developer.mozilla.org/en-US/docs/WebAPI/TCP_Socket
 [9]: http://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/f2012/jmv87/site/files/pima15740-2000.pdf
 [10]: http://www.gphoto.org/doc/ptpip.php
 [11]: http://www.cipa.jp/ptp-ip/documents_e/CIPA_DC-005_Whitepaper_ENG.pdf
