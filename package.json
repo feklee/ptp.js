@@ -1,6 +1,6 @@
 {
     "name": "ptp",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "author": "Developers of ptp.js",
     "homepage": "https://github.com/feklee/ptp.js",
     "contributors": ["Felix E. Klee <felix.klee@inka.de>"],
@@ -16,6 +16,6 @@
     },
     "license": "MIT",
     "keywords" : ["picture", "transfer", "protocol", "photography", "camera",
-                  "video", "ptp/ip", "ip"],
+                  "video", "ptp/ip", "ip", "ptp.js"],
     "bugs": "https://github.com/feklee/ptp.js/issues"
 }
