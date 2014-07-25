@@ -27,14 +27,14 @@ Basic usage:
 
     An object is created, let’s call it `ptp`.
 
- 2. Interface with the camera via properties such as `ptp.ip` and functions such
-    as `ptp.connect()`.
+ 2. Interface with the camera via properties such as `ptp.host` and functions
+    such as `ptp.connect()`.
 
 For an example, see demos:
 
-  + B2G: Firefox OS app `manifest.webapp`
+  + B2G: Firefox OS app (`manifest.webapp`)
 
-  + Node.js: see `node-demo/app.js --help`
+  + Node.js: `node-demo/app.js`
 
     The interesting part is the code for the individual commands.
 
