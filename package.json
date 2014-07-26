@@ -4,7 +4,7 @@
     "author": "Developers of ptp.js",
     "homepage": "https://github.com/feklee/ptp.js",
     "contributors": ["Felix E. Klee <felix.klee@inka.de>"],
-    "description": "For controlling cameras via PTP/IP",
+    "description": "PTP/IP implementation for remote controlling cameras",
     "main": "node_main.js",
     "dependencies": {
         "requirejs": ">=2",
