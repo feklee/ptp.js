@@ -137,5 +137,5 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [9]: http://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/f2012/jmv87/site/files/pima15740-2000.pdf
 [10]: http://www.gphoto.org/doc/ptpip.php
 [11]: http://www.cipa.jp/ptp-ip/documents_e/CIPA_DC-005_Whitepaper_ENG.pdf
-[12]: ./images/2014-06-19+02_annotated_graph.png
+[12]: 2014-06-19+02_annotated_graph.png
 [13]: https://marketplace.firefox.com/app/theta-control
