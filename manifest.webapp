@@ -3,7 +3,7 @@
     "description": "Demo of ptp.js functions on Firefox OS (B2G)",
     "launch_path": "/b2g_demo/app.html",
     "icons": {
-        "128": "/b2g_demo/app.png"
+        "60": "/b2g_demo/app.png"
     },
     "developer": {
         "name": "Developers of ptp.js",
