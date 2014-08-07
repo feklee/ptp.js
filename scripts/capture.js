@@ -10,18 +10,18 @@ define([
     var onCaptureInitiated;
 
     onCaptureInitiated = function (options) {
-        var onNoConnection = function () {
-            connection.removeEventListener('noConnection',
-                                           onNoConnection);
+        var onDisconnected = function () {
+            connection.removeEventListener('disconnected',
+                                           onDisconnected);
             options.onFailure();
         };
 
-        connection.addEventListener('noConnection', onNoConnection);
+        connection.addEventListener('disconnected', onDisconnected);
 
         eventLoop.captureCompleteCallbacks[options.transactionId] =
             function () {
-                connection.removeEventListener('noConnection',
-                                               onNoConnection);
+                connection.removeEventListener('disconnected',
+                                               onDisconnected);
                 util.runIfSet(options.onSuccess);
             };
     };
