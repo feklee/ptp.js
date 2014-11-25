@@ -79,6 +79,8 @@ Coding conventions
 
       + `package.json`
 
+      + `bower.json`
+
 Reading
 -------
 
