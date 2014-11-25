@@ -6,7 +6,7 @@
     ],
     "homepage": "https://github.com/feklee/ptp.js",
     "description": "PTP/IP implementation for remote controlling cameras",
-    "main": "node_main.js",
+    "main": "scripts/ptp.js",
     "license": "MIT",
     "keywords" : ["picture", "transfer", "protocol", "photography", "camera",
                   "video", "ptp/ip", "ip", "ptp.js"],
