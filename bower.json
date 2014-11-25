@@ -1,0 +1,21 @@
+{
+    "name": "ptp.js",
+    "version": "2.0.3",
+    "authors": [
+        "Felix E. Klee <felix.klee@inka.de>"
+    ],
+    "homepage": "https://github.com/feklee/ptp.js",
+    "description": "PTP/IP implementation for remote controlling cameras",
+    "main": "node_main.js",
+    "moduleType": [
+        "amd"
+    ],
+    "license": "MIT",
+    "keywords" : ["picture", "transfer", "protocol", "photography", "camera",
+                  "video", "ptp/ip", "ip", "ptp.js"],
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components"
+    ]
+}

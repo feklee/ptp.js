@@ -21,7 +21,7 @@ Basic usage:
 
  1. Load the module, depending on platform:
 
-      + B2G: AMD module `scripts/ptp.js`
+      + B2G ([TCP Socket API][8]): AMD module `scripts/ptp.js`
 
       + Node.js module
 
@@ -45,14 +45,6 @@ Limitations
   * Incompleteness: Many PTP functions are missing.
 
   * Only tested with one camera, the Ricoh Theta.
-
-
-Requirements
-============
-
-  * [RequireJS][7]
-
-  * [TCPSocket API][8], available on Firefox OS 1.x via `navigator.mozTCPSocket`
 
 
 Development
@@ -79,9 +71,7 @@ Coding conventions
     functions to return different types of values, including types indicating
     errors.
 
-  * Versioning: major.minor.bug-fix
-
-    Incompatible changes to the API mandate an update of the major version.
+  * Versioning: [major.minor.patch][7]
 
     Keep version up to date in:
 
@@ -132,7 +122,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [3]: mailto:felix.klee@inka.de
 [4]: http://mobilehackerz.jp/contents/Review/RICOH_THETA
 [6]: http://mobilehackerz.jp/contents?plugin=attach&pcmd=info&file=ThetaShutter_PQIAirPen002.zip&refer=Review%2FRICOH_THETA%2FRemote
-[7]: http://requirejs.org/
+[7]: http://semver.org/
 [8]: https://developer.mozilla.org/en-US/docs/WebAPI/TCP_Socket
 [9]: http://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/f2012/jmv87/site/files/pima15740-2000.pdf
 [10]: http://www.gphoto.org/doc/ptpip.php
