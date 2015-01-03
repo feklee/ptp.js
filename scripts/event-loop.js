@@ -10,6 +10,7 @@ define([
     var onInitialized = util.nop, sessionId, eventCodes,
         loop = loopFactory.create('event'),
         captureCompleteCallbacks = {}, // by transaction ID
+        objectAddedCallbacks = [],
         eventHandlers = {}; // by event code
 
     eventCodes = {
@@ -24,6 +25,15 @@ define([
         if (callback !== undefined) {
             callback();
             delete captureCompleteCallbacks[transactionId];
+        }
+    };
+
+    eventHandlers[eventCodes.objectAdded] = function (content) {
+        for(var i = 0; i < objectAddedCallbacks.length; i++) {
+            var callback = objectAddedCallbacks[i];
+            if(typeof callback === 'function') {
+                callback(content);
+            }
         }
     };
 
@@ -67,6 +77,9 @@ define([
         }},
         captureCompleteCallbacks: {get: function () {
             return captureCompleteCallbacks;
+        }},
+        objectAddedCallbacks: {get: function () {
+            return objectAddedCallbacks;
         }},
         stop: {value: loop.stop}
     });

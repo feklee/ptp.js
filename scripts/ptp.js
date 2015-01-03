@@ -3,13 +3,14 @@
 /*global define */
 
 define([
-    './data-factory', './main-loop', './connection',
+    './data-factory', './main-loop', 'event-loop', './connection',
     './set-device-property', './get-device-property',
     './capture', './logger', './util', './connection-settings',
-    './device-prop-codes'
-], function (dataFactory, mainLoop, connection,
+    './device-prop-codes', './get-object-handles', './get-object', './delete-object'
+], function (dataFactory, mainLoop, eventLoop, connection,
              setDeviceProperty, getDeviceProperty,
-             capture, logger, util, connectionSettings, devicePropCodes) {
+             capture, logger, util, connectionSettings, devicePropCodes,
+             getObjectHandles, getObject, deleteObject) {
     'use strict';
 
     var onDisconnected = util.nop, onError = util.nop, onConnected = util.nop;
@@ -39,6 +40,9 @@ define([
         onDisconnected: {set: function (x) {
             onDisconnected = x;
         }},
+        onObjectAdded: {set: function (x) {
+            eventLoop.objectAddedCallbacks.push(x);
+        }},
         host: {set: function (x) {
             connectionSettings.host = x;
         }},
@@ -56,6 +60,9 @@ define([
         }},
         setDeviceProperty: {value: setDeviceProperty},
         getDeviceProperty: {value: getDeviceProperty},
+        getObjectHandles: {value: getObjectHandles},
+        getObject: {value: getObject},
+        deleteObject: {value: deleteObject},
         dataFactory: {get: function () {
             return dataFactory;
         }},
