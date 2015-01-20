@@ -95,7 +95,6 @@ define(['./packet', './loop-factory'], function (packet, loopFactory) {
 
         if (callback !== undefined) {
             callback(content);
-            delete dataPacketCallbacks[content.transactionId];
         }
     };
 
@@ -106,6 +105,7 @@ define(['./packet', './loop-factory'], function (packet, loopFactory) {
             callback(content);
             delete endDataPacketCallbacks[content.transactionId];
         }
+        delete dataPacketCallbacks[content.transactionId];
     };
 
     return Object.create(null, {
