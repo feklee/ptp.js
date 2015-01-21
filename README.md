@@ -38,6 +38,10 @@ For an example, see demos:
 
     The interesting part is the code for the individual commands.
 
+    Example command (this one doesn’t need the camera connected):
+
+        $ node app.js date_time_string
+
 
 Limitations
 ===========
@@ -101,7 +105,7 @@ The MIT License (MIT)
 Copyright (c) 2014 authors of ptp.js
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
+this software and associated documentation files (the “Software”), to deal in
 the Software without restriction, including without limitation the rights to
 use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 the Software, and to permit persons to whom the Software is furnished to do so,
