@@ -7,9 +7,9 @@ define([
 ], function (command, mainLoop, dataFactory, util) {
     'use strict';
 
-    var onObjectDelete;
+    var onObjectDeleted;
 
-    onObjectDelete = function (options) {
+    onObjectDeleted = function (options) {
         util.runIfSet(options.onSuccess, {
             dataPacket: options.dataPacket
         });
@@ -19,7 +19,7 @@ define([
         var onSuccess, dataPacket = dataFactory.create();
 
         onSuccess = function (options2) {
-            onObjectDelete({
+            onObjectDeleted({
                 onSuccess: options.onSuccess,
                 transactionId: options2.transactionId,
                 argsData: options2.receivedContent.argsData,

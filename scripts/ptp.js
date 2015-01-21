@@ -3,10 +3,11 @@
 /*global define */
 
 define([
-    './data-factory', './main-loop', 'event-loop', './connection',
+    './data-factory', './main-loop', './event-loop', './connection',
     './set-device-property', './get-device-property',
     './capture', './logger', './util', './connection-settings',
-    './device-prop-codes', './get-object-handles', './get-object', './delete-object'
+    './device-prop-codes', './get-object-handles', './get-object',
+    './delete-object'
 ], function (dataFactory, mainLoop, eventLoop, connection,
              setDeviceProperty, getDeviceProperty,
              capture, logger, util, connectionSettings, devicePropCodes,

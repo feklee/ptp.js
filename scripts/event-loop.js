@@ -29,9 +29,11 @@ define([
     };
 
     eventHandlers[eventCodes.objectAdded] = function (content) {
-        for(var i = 0; i < objectAddedCallbacks.length; i++) {
-            var callback = objectAddedCallbacks[i];
-            if(typeof callback === 'function') {
+        var i, callback;
+
+        for (i = 0; i < objectAddedCallbacks.length; i += 1) {
+            callback = objectAddedCallbacks[i];
+            if (typeof callback === 'function') {
                 callback(content);
             }
         }
