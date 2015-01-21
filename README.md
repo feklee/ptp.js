@@ -34,11 +34,12 @@ For an example, see demos:
 
   + B2G: Firefox OS app (`manifest.webapp`)
 
-  + Node.js: `node-demo/app.js`
+  + Node.js: `node_demo/app.js`
 
-    The interesting part is the code for the individual commands.
+    Commands have the same name as the files in the sub directory `commands`,
+    less the `.js` extension.
 
-    Example command (this one doesn’t need the camera connected):
+    Example (this one doesn’t need a camera connected):
 
         $ node app.js date_time_string
 
