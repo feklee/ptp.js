@@ -39,9 +39,16 @@ For an example, see demos:
     Commands have the same name as the files in the sub directory `commands`,
     less the `.js` extension.
 
-    Example (this one doesn’t need a camera connected):
+    Examples:
 
         $ node app.js date_time_string
+        20150123T154256.7-0000
+        $ node app.js capture 192.168.1.1
+        Connecting to 192.168.1.1...
+        Connected
+        Capturing...
+        Finished
+        Disconnected
 
 
 Limitations
