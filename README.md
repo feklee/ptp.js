@@ -36,19 +36,8 @@ For an example, see demos:
 
   + Node.js: `node_demo/app.js`
 
-    Commands have the same name as the files in the sub directory `commands`,
-    less the `.js` extension.
-
-    Examples:
-
-        $ node app.js date_time_string
-        20150123T154256.7-0000
-        $ node app.js capture 192.168.1.1
-        Connecting to 192.168.1.1...
-        Connected
-        Capturing...
-        Finished
-        Disconnected
+    Note for Windows users: Due to Node.js [issue #3584][14], output may be
+    missing when using redirection, for example with `more`.
 
 
 Limitations
@@ -141,3 +130,4 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [11]: http://www.cipa.jp/ptp-ip/documents_e/CIPA_DC-005_Whitepaper_ENG.pdf
 [12]: images/2014-06-19+02_annotated_graph.png?raw=true
 [13]: https://marketplace.firefox.com/app/theta-control
+[14]: https://github.com/joyent/node/issues/3584

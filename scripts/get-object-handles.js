@@ -29,7 +29,9 @@ define([
 
         command.sendCommand({
             operationCode: mainLoop.operationCodes.getObjectHandles,
-            args: options.args,
+            args: [options.storageId,
+                   options.objectFormatCode || 0,
+                   options.objectHandleOfAssociation || 0],
             payload: options.data,
             onDataPacket: function (packetContent) {
                 dataPacket.appendData(packetContent.payloadData);

@@ -5,29 +5,16 @@
 var ptp = require('../..'), util = require('./util'), onConnected;
 
 onConnected = function () {
-    console.log('Capturing...');
-    ptp.capture({
-        storageId: 0, // optional
-        objectFormatCode: 0, // optional
-        onSuccess: function () {
-            console.log('Finished');
-            ptp.disconnect();
-        },
-        onFailure: function () {
-            console.error('Failed');
-            ptp.disconnect();
-        }
-    });
-};
-
-onConnected = function () {
     var ptp = require('../../node_main');
 
     console.log('Getting object handles...');
 
     ptp.getObjectHandles({
+        storageId: 0xffffffff, // all stores
+        objectFormatCode: 0, // optional
+        objectHandleOfAssociation: 0, // optional
         onSuccess: function (options) {
-            console.log('Value (hex): ' + options.dataPacket.toString());
+            console.log('Handles: ' + options.dataPacket.array.join(', '));
             ptp.disconnect();
         },
         onFailure: function () {

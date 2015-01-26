@@ -5,15 +5,19 @@
 var host, commandName, parameters,
     packageJson = require('../package.json'),
     program = require('commander'),
-    commands = require('./commands');
+    commands = require('./commands'),
+    exit = require('exit'),
+    customHelp;
+
+customHelp = function () {
+    console.log('  Host: camera\'s address, e.g. 192.168.1.1');
+    console.log('');
+    commands.help();
+};
 
 program
     .option('-v, --verbose', 'print verbose messages')
-    .on('--help', function () {
-        console.log('  Host: camera\'s address, e.g. 192.168.1.1');
-        console.log('');
-        commands.help();
-    });
+    .on('--help', customHelp);
 
 program
     .version(packageJson.version)

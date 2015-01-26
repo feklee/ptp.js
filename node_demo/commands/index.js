@@ -41,6 +41,13 @@ commands = [
     {
         name: 'date_time_string',
         description: 'PTP format of current time'
+    },
+    {
+        name: 'get_object_handles',
+        parameters: [
+            {name: 'host', example: '192.168.1.1'}
+        ],
+        description: 'get handles of images on camera'
     }
 ];
 
