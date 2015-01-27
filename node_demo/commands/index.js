@@ -47,7 +47,7 @@ commands = [
         parameters: [
             {name: 'host', example: '192.168.1.1'}
         ],
-        description: 'get handles of images'
+        description: 'get handles of files and folders'
     },
     {
         name: 'get_object',
@@ -56,7 +56,15 @@ commands = [
             {name: 'object_handle', example: '6620401'},
             {name: 'filename', example: 'photo.jpg'}
         ],
-        description: 'get image'
+        description: 'download object'
+    },
+    {
+        name: 'delete_object',
+        parameters: [
+            {name: 'host', example: '192.168.1.1'},
+            {name: 'object_handle', example: '6620401'}
+        ],
+        description: 'delete object'
     }
 ];
 
