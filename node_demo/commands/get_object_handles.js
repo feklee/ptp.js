@@ -12,7 +12,9 @@ onConnected = function () {
         objectFormatCode: 0, // optional
         objectHandleOfAssociation: 0, // optional
         onSuccess: function (options) {
-            console.log('Handles: ' + options.handles.join(', '));
+            console.log(options.handles.length === 0 ?
+                        'No objects found' :
+                        'Handles: ' + options.handles.join(', '));
             ptp.disconnect();
         },
         onFailure: function () {
