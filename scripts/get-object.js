@@ -7,9 +7,9 @@ define([
 ], function (command, mainLoop, dataFactory, util) {
     'use strict';
 
-    var onObjectGot;
+    var onObjectGotten;
 
-    onObjectGot = function (options) {
+    onObjectGotten = function (options) {
         util.runIfSet(options.onSuccess, {
             dataPacket: options.dataPacket
         });
@@ -19,7 +19,7 @@ define([
         var onSuccess, dataPacket = dataFactory.create();
 
         onSuccess = function (options2) {
-            onObjectGot({
+            onObjectGotten({
                 onSuccess: options.onSuccess,
                 transactionId: options2.transactionId,
                 argsData: options2.receivedContent.argsData,
@@ -29,8 +29,7 @@ define([
 
         command.sendCommand({
             operationCode: mainLoop.operationCodes.getObject,
-            args: [options.objectId],
-            payload: options.data,
+            args: [options.objectHandle],
             onDataPacket: function (packetContent) {
                 dataPacket.appendData(packetContent.payloadData);
             },

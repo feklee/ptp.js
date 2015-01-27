@@ -5,8 +5,6 @@
 var ptp = require('../..'), util = require('./util'), onConnected;
 
 onConnected = function () {
-    var ptp = require('../../node_main');
-
     console.log('Getting object handles...');
 
     ptp.getObjectHandles({
@@ -14,7 +12,7 @@ onConnected = function () {
         objectFormatCode: 0, // optional
         objectHandleOfAssociation: 0, // optional
         onSuccess: function (options) {
-            console.log('Handles: ' + options.dataPacket.array.join(', '));
+            console.log('Handles: ' + options.handles.join(', '));
             ptp.disconnect();
         },
         onFailure: function () {

@@ -49,7 +49,7 @@ define(['./util'], function (util) {
     };
 
     internalProto.appendData = function (data) {
-        Array.prototype.push.apply(this.arr, data.array);
+        Array.prototype.push.apply(this.arr, data.byteArray);
     };
 
     internalProto.slice = function (offs, end) {
@@ -109,6 +109,26 @@ define(['./util'], function (util) {
         for (i = 0; i < arrToAppend.length; i += 1) {
             this.arr.push(arrToAppend[i]);
         }
+    };
+
+    internalProto.wordArray = function () {
+        var i, wordArray = [];
+
+        for (i = 0; i < Math.floor(this.arr.length / 2); i += 1) {
+            wordArray.push(this.getLittleEndian(2 * i, 2));
+        }
+
+        return wordArray;
+    };
+
+    internalProto.dwordArray = function () {
+        var i, dwordArray = [];
+
+        for (i = 0; i < Math.floor(this.arr.length / 4); i += 1) {
+            dwordArray.push(this.getLittleEndian(4 * i, 4));
+        }
+
+        return dwordArray;
     };
 
     internalProto.shift = function (maxNumberOfBytes) {
@@ -215,6 +235,18 @@ define(['./util'], function (util) {
 
             array: {get: function () {
                 return internal.arr;
+            }},
+
+            byteArray: {get: function () {
+                return internal.arr;
+            }},
+
+            wordArray: {get: function () {
+                return internal.wordArray();
+            }},
+
+            dwordArray: {get: function () {
+                return internal.dwordArray();
             }},
 
             shift: {value: function (maxNumberOfBytes) {

@@ -11,7 +11,7 @@ define([
 
     onObjectHandlesGotten = function (options) {
         util.runIfSet(options.onSuccess, {
-            dataPacket: options.dataPacket
+            handles: options.dataPacket.dwordArray.splice(2)
         });
     };
 

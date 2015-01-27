@@ -47,7 +47,16 @@ commands = [
         parameters: [
             {name: 'host', example: '192.168.1.1'}
         ],
-        description: 'get handles of images on camera'
+        description: 'get handles of images'
+    },
+    {
+        name: 'get_object',
+        parameters: [
+            {name: 'host', example: '192.168.1.1'},
+            {name: 'object_handle', example: '6620401'},
+            {name: 'filename', example: 'photo.jpg'}
+        ],
+        description: 'get image'
     }
 ];
 
