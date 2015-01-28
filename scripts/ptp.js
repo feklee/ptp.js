@@ -5,13 +5,16 @@
 define([
     './data-factory', './main-loop', './event-loop', './connection',
     './set-device-property', './get-device-property',
-    './capture', './logger', './util', './connection-settings',
-    './device-prop-codes', './get-object-handles', './get-object',
-    './delete-object'
+    './capture',
+    './get-object-handles', './get-object-info',
+    './get-object', './delete-object',
+    './logger', './util', './connection-settings',
+    './device-prop-codes', './object-format-codes'
 ], function (dataFactory, mainLoop, eventLoop, connection,
              setDeviceProperty, getDeviceProperty,
-             capture, logger, util, connectionSettings, devicePropCodes,
-             getObjectHandles, getObject, deleteObject) {
+             capture, getObjectHandles, getObjectInfo, getObject, deleteObject,
+             logger, util, connectionSettings, devicePropCodes,
+             objectFormatCodes) {
     'use strict';
 
     var onDisconnected = util.nop, onError = util.nop, onConnected = util.nop;
@@ -59,9 +62,13 @@ define([
         devicePropCodes: {get: function () {
             return devicePropCodes;
         }},
+        objectFormatCodes: {get: function () {
+            return objectFormatCodes;
+        }},
         setDeviceProperty: {value: setDeviceProperty},
         getDeviceProperty: {value: getDeviceProperty},
         getObjectHandles: {value: getObjectHandles},
+        getObjectInfo: {value: getObjectInfo},
         getObject: {value: getObject},
         deleteObject: {value: deleteObject},
         dataFactory: {get: function () {

@@ -23,7 +23,7 @@ define(['./packet', './loop-factory'], function (packet, loopFactory) {
         getDeviceInfo: 0x1001,
         openSession: 0x1002,
         closeSession: 0x1003,
-        getStorageIDs: 0x1004,
+        getStorageIds: 0x1004,
         getStorageInfo: 0x1005,
         getNumObjects: 0x1006,
         getObjectHandles: 0x1007,

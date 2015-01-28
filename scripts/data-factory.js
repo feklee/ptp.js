@@ -40,6 +40,10 @@ define(['./util'], function (util) {
         this.setLittleEndian(this.arr.length, value, 2);
     };
 
+    internalProto.getByte = function (offs) {
+        return this.arr[offs];
+    };
+
     internalProto.getWord = function (offs) {
         return this.getLittleEndian(offs, 2);
     };
@@ -98,6 +102,10 @@ define(['./util'], function (util) {
         }
 
         return string;
+    };
+
+    internalProto.getWstringLength = function (offs) {
+        return 1 + 2 * this.getByte(offs);
     };
 
     internalProto.setDword = function (offs, value) {
@@ -191,12 +199,20 @@ define(['./util'], function (util) {
                 return internal.getWstring(offs);
             }},
 
+            getWstringLength: {value: function (offs) {
+                return internal.getWstringLength(offs);
+            }},
+
             appendDword: {value: function (value) {
                 internal.appendDword(value);
             }},
 
             appendWord: {value: function (value) {
                 internal.appendWord(value);
+            }},
+
+            getByte: {value: function (offs) {
+                return internal.getByte(offs);
             }},
 
             getWord: {value: function (offs) {

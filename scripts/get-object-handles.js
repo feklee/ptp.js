@@ -18,11 +18,9 @@ define([
     return function (options) {
         var onSuccess, dataPacket = dataFactory.create();
 
-        onSuccess = function (options2) {
+        onSuccess = function () {
             onObjectHandlesGotten({
                 onSuccess: options.onSuccess,
-                transactionId: options2.transactionId,
-                argsData: options2.receivedContent.argsData,
                 dataPacket: dataPacket
             });
         };
@@ -32,7 +30,6 @@ define([
             args: [options.storageId,
                    options.objectFormatCode || 0,
                    options.objectHandleOfAssociation || 0],
-            payload: options.data,
             onDataPacket: function (packetContent) {
                 dataPacket.appendData(packetContent.payloadData);
             },

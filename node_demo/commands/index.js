@@ -47,7 +47,15 @@ commands = [
         parameters: [
             {name: 'host', example: '192.168.1.1'}
         ],
-        description: 'get handles of files and folders'
+        description: 'handles of files and folders'
+    },
+    {
+        name: 'get_object_info',
+        parameters: [
+            {name: 'host', example: '192.168.1.1'},
+            {name: 'object_handle', example: '6620401'}
+        ],
+        description: 'description of object'
     },
     {
         name: 'get_object',

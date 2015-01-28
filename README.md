@@ -72,13 +72,22 @@ Coding conventions
     functions to return different types of values, including types indicating
     errors.
 
-  * Versioning: [major.minor.patch][7]
+  * Version numbers: [major.minor.patch][7]
 
-    Keep version up to date in:
+Publishing a new version
+------------------------
+
+  * Keep version up to date in:
 
       + Git tags
 
       + `package.json`
+
+  * Publish to:
+
+      + [github.com/feklee/ptp.js][15]
+
+      + npm: [package ptp][16]
 
 Reading
 -------
@@ -131,3 +140,5 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [12]: images/2014-06-19+02_annotated_graph.png?raw=true
 [13]: https://marketplace.firefox.com/app/theta-control
 [14]: https://github.com/joyent/node/issues/3584
+[15]: https://github.com/feklee/ptp.js
+[16]: https://www.npmjs.com/package/ptp

@@ -18,11 +18,9 @@ define([
     return function (options) {
         var onSuccess, dataPacket = dataFactory.create();
 
-        onSuccess = function (options2) {
+        onSuccess = function () {
             onObjectGotten({
                 onSuccess: options.onSuccess,
-                transactionId: options2.transactionId,
-                argsData: options2.receivedContent.argsData,
                 dataPacket: dataPacket
             });
         };
