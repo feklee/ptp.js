@@ -93,7 +93,8 @@ define([
             return true;
         }
 
-        return this.mozTcpSocket.send(data.buffer);
+        // See also: https://bugzilla.mozilla.org/show_bug.cgi?id=1106259
+        return this.mozTcpSocket.send(data.buffer, 0, data.length);
     };
 
     create = function () {
