@@ -5,14 +5,6 @@ Introduction
 controlling cameras via [PTP][1]/IP: *Picture Transfer Protocol* via an
 IP-based network
 
-The first version of the library was developed by [Felix][3] for interfacing
-with a [Ricoh Theta][2]. On Firefox Marketplace you find the result:
-[Theta Control][13]
-
-An inspiration was `ThetaShutterProc.c`, a set of C functions part of
-[ThetaShutter_PQIAirPen002.zip][6] by [MobileHackerz][4]. *ptp.js* has a
-different architecture, however, making use of JavaScript’s functional nature.
-
 
 Documentation
 =============
@@ -21,9 +13,9 @@ Basic usage:
 
  1. Load the module, depending on platform:
 
-      + B2G ([TCP Socket API][8]): AMD module `scripts/ptp.js`
-
       + Node.js module
+
+      + B2G ([TCP Socket API][8]): AMD module `scripts/ptp.js`
 
     An object is created, let’s call it `ptp`.
 
@@ -32,12 +24,24 @@ Basic usage:
 
 For an example, see demos:
 
-  + B2G: Firefox OS app (`manifest.webapp`)
-
   + Node.js: `node_demo/app.js`
 
     Note for Windows users: Due to Node.js [issue #3584][14], output may be
     missing when using redirection, for example with `more`.
+
+  + B2G: Firefox OS app (`manifest.webapp`)
+
+
+History
+=======
+
+The first version of the library was developed by [Felix][3] for interfacing
+with a [Ricoh Theta][2]. The app [Theta Control][13] was available for Firefox
+OS.
+
+An inspiration was `ThetaShutterProc.c`, a set of C functions part of
+[ThetaShutter_PQIAirPen002.zip][6] by [MobileHackerz][4]. *ptp.js* has a
+different architecture, however, making use of JavaScript’s functional nature.
 
 
 Limitations
@@ -138,7 +142,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [10]: http://www.gphoto.org/doc/ptpip.php
 [11]: http://www.cipa.jp/ptp-ip/documents_e/CIPA_DC-005_Whitepaper_ENG.pdf
 [12]: images/2014-06-19+02_annotated_graph.png?raw=true
-[13]: https://marketplace.firefox.com/app/theta-control
+[13]: https://github.com/feklee/theta-control
 [14]: https://github.com/joyent/node/issues/3584
 [15]: https://github.com/feklee/ptp.js
 [16]: https://www.npmjs.com/package/ptp
